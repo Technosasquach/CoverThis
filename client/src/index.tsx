@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render } from "react-dom";
 
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 
 import "./public/bootstrap.min.css";
 
@@ -17,8 +17,7 @@ export default class Root extends React.Component {
 
     render() {
         return (
-            <Navbar>
-            </Navbar>
+            <h1>Hello</h1>
         );
     }
 }

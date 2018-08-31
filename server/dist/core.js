@@ -1,25 +1,23 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // Inital server setup
 // ----------------------------------------------------------------------------
-import * as express from "express";
-import * as http from "http";
+const express = require("express");
+const http = require("http");
 const app = express();
-export const App = app;
+exports.App = app;
 const server = http.createServer(app);
 const io = require("socket.io")(server);
-export const Server = server;
-
+exports.Server = server;
 // Utilities
 // ----------------------------------------------------------------------------
-import * as compression from "compression";
-import * as cookieParser from "cookie-parser";
-import * as bodyParser from "body-parser";
-import * as errorHandler from "errorhandler";
-import * as logger from "morgan";
-import * as fs from "fs";
-import * as lusca from "lusca";
-import * as path from "path";
-
-
+const compression = require("compression");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const errorHandler = require("errorhandler");
+const logger = require("morgan");
+const lusca = require("lusca");
+const path = require("path");
 // Server Configuration
 // ----------------------------------------------------------------------------
 app.set("port", process.env.PORT || 3000);
@@ -36,22 +34,17 @@ app.use(lusca.xssProtection(true));
 // Pretty prints in console
 app.use(errorHandler());
 app.use(logger("dev"));
-
 app.use(express.static(__dirname + "/../../client/dist"));
-
 // Prod vs Dev code and display
 if (app.get("env") === "production") {
     app.set("trust proxy", 1); // trust first proxy
-} else {
+}
+else {
     app.locals.pretty = true;
 }
-
-import routes from "./controllers/routes";
-app.use("/", routes);
-
-// The last route run
-import { Request, Response } from "express";
-
-app.get("*", (req: Request, res: Response) => {
+const routes_1 = require("./controllers/routes");
+app.use("/", routes_1.default);
+app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./../../../client/dist/index.html"));
 });
+//# sourceMappingURL=core.js.map
