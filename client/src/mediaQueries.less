@@ -1,0 +1,38 @@
+
+// File containing 
+
+//Media Queries Sizes
+@mq-size-min:       0px     ;
+@mq-size-phone:     300px   ; @_mq-size-phone:      400px   ;
+@mq-size-phablet:   560px   ; @_mq-size-phablet:    560px   ;
+@mq-size-tablet:    720px   ; @_mq-size-tablet:     720px   ;
+@mq-size-desktop:   960px   ; @_mq-size-desktop:    960px   ;
+@mq-size-lgdesk:    1200px  ; @_mq-size-lgdesk:     1200px  ;
+@mq-size-max:       10000px ; // If its bigger than this, then you have more issues to deal with
+
+//Media Query Outlines
+//One Jump
+@mq-lgdesk-max:         ~"only screen and (min-width: @{mq-size-lgdesk} ) and (max-width: @{mq-size-max})";
+@mq-desktop-lgdesk:     ~"only screen and (min-width: @{mq-size-desktop}) and (max-width: @{_mq-size-lgdesk})";
+@mq-tablet-desktop:     ~"only screen and (min-width: @{mq-size-tablet} ) and (max-width: @{_mq-size-desktop})";
+@mq-phablet-tablet:     ~"only screen and (min-width: @{mq-size-phablet}) and (max-width: @{_mq-size-tablet})";
+@mq-phone-phablet:      ~"only screen and (min-width: @{mq-size-phone}  ) and (max-width: @{_mq-size-phablet})";
+@mq-min-phone:          ~"only screen and (min-width: @{mq-size-min}    ) and (max-width: @{_mq-size-phone})";
+//Top Jump
+@mq-desktop-max:        ~"only screen and (min-width: @{mq-size-desktop}) and (max-width: @{mq-size-max})";
+@mq-tablet-lgdesk:      ~"only screen and (min-width: @{mq-size-tablet} ) and (max-width: @{_mq-size-lgdesk})";
+@mq-phablet-desktop:    ~"only screen and (min-width: @{mq-size-phablet}) and (max-width: @{_mq-size-desktop})";
+@mq-phone-tablet:       ~"only screen and (min-width: @{mq-size-phone}  ) and (max-width: @{_mq-size-tablet})";
+@mq-min-phablet:        ~"only screen and (min-width: @{mq-size-min}    ) and (max-width: @{_mq-size-phablet})";
+//Three Jump
+@mq-tablet-max:         ~"only screen and (min-width: @{mq-size-tablet} ) and (max-width: @{mq-size-max})";
+@mq-phablet-lgdesk:     ~"only screen and (min-width: @{mq-size-phablet}) and (max-width: @{_mq-size-lgdesk})";
+@mq-phone-desktop:      ~"only screen and (min-width: @{mq-size-phone}  ) and (max-width: @{_mq-size-desktop})";
+@mq-min-tablet:         ~"only screen and (min-width: @{mq-size-min}    ) and (max-width: @{_mq-size-tablet})";
+//Four Jump
+@mq-phablet-max:        ~"only screen and (min-width: @{mq-size-phablet}) and (max-width: @{mq-size-max})";
+@mq-phone-lgdesk:       ~"only screen and (min-width: @{mq-size-phone}  ) and (max-width: @{_mq-size-lgdesk})";
+@mq-min-desktop:        ~"only screen and (min-width: @{mq-size-min}    ) and (max-width: @{_mq-size-desktop})";
+//Five Jump
+@mq-phone-max:          ~"only screen and (min-width: @{mq-size-phone}  ) and (max-width: @{mq-size-max})";
+@mq-min-lgdesk:         ~"only screen and (min-width: @{mq-size-min}    ) and (max-width: @{_mq-size-lgdesk})";

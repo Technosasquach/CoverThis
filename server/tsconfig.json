@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "lib": [
+            "dom",
+            "esnext",
+            "esnext.asynciterable",
+            "es2018",
+            "es2017",
+            "es6",
+            "es2016",
+            "es2015",
+            "scripthost"
+        ],
+        "jsx": "react",
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "baseUrl": ".",
+    },
+    "include": [
+        "server/src/**/*"
+    ],
+    "files": [
+        "src/index.ts"
+    ],
+}
