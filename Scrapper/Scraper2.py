@@ -12,11 +12,6 @@ def get_summary(id):
 
     if(checker == []):
         matches = re.findall(r' \<noscript[\s\S]*?\/div', yeet, re.I |re.M)
-
-        f = open("yeet/"+str(id)+'.txt','w')
-
-        f.write(str(yeet.encode("utf-8")))
-        f.close()
         try:
             if(len(matches) > 1):
     	        text = matches[1]
