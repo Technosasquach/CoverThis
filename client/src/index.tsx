@@ -3,7 +3,7 @@ import { render } from "react-dom";
 
 // import Navbar from "./components/Navbar";
 
-// import "./public/bootstrap.min.css";
+import "./public/animate.css";
 import "./index.less";
 
 import Entry from "./components/Entry";
@@ -18,7 +18,7 @@ export default class Root extends React.Component<{},{showResults: boolean}> {
     constructor(props: any) {
         super(props);
         this.state = {
-            showResults: false
+            showResults: true
         }
         this.showResultsPage = this.showResultsPage.bind(this);
     }

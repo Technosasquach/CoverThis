@@ -153,7 +153,8 @@ export class InfoEntry extends React.Component<{
     searchArea: string,
     recentSearch: ResponseObj[],
     books: any[],
-    searched: boolean
+    searched: boolean,
+    disappeared: boolean
 }> {
 
     constructor(props: any) {
@@ -162,7 +163,8 @@ export class InfoEntry extends React.Component<{
             searchArea: "",
             recentSearch: [],
             books: [],
-            searched: false
+            searched: false,
+            disappeared: false
         }
     }
 
@@ -185,6 +187,11 @@ export class InfoEntry extends React.Component<{
                     recentSearch: response.data,
                     searched: true
                 })
+                setTimeout(() => {
+                    this.setState({
+                        disappeared: true
+                    })
+                }, 200)
                 this.searchToBooks();
             });
         }
@@ -237,10 +244,13 @@ export class InfoEntry extends React.Component<{
         return (
             <div className="InfoEntryPage">
                 <div className="InfoContainer">
-                    {!this.state.searched ? <div className="InfoTitleSection">
+                    {!this.state.searched ? <div className="InfoTitleSection animated fadeIn">
                         <h1>Cover This</h1>
                         <span>For all your booking needs</span>
-                    </div> : ""}
+                    </div> : this.state.disappeared ? "" : <div className="InfoTitleSection animated fadeOutLeft">
+                        <h1>Cover This</h1>
+                        <span>For all your booking needs</span>
+                    </div> }
                     <div className="InfoDataSection">
                         <h3>Insert Summary</h3>
                         <input 

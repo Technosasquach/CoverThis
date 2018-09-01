@@ -17,7 +17,7 @@ export default class BookListing extends React.Component<{bookObj: any, frontEnd
 
     render() {
         return (
-            <a href="#" onClick={(event)=>{event.preventDefault(); this.props.frontEnd.bookSelected(this.props.bookObj)}} className="BookListing">
+            <a href="#" onClick={(event)=>{event.preventDefault(); this.props.frontEnd.bookSelected(this.props.bookObj)}} className="BookListing animated fadeIn">
                 <div className="ImgHolder">
                     <img src={this.props.bookObj["IMAGE URL"]} height="100%"></img>
                 </div>
