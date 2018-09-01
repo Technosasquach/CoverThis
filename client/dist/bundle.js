@@ -145,21 +145,29 @@ var Entry = /** @class */ (function (_super) {
     function Entry(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            showLoading: false
+            showLoading: false,
+            book: []
         };
         _this.showLoading = _this.showLoading.bind(_this);
+        _this.bookPassthrough = _this.bookPassthrough.bind(_this);
         return _this;
     }
     Entry.prototype.componentDidMount = function () {
         this.props.frontEnd.mountInputState(this.showLoading);
+        this.props.frontEnd.mountBookSelectionPassThrough(this.bookPassthrough);
     };
     Entry.prototype.showLoading = function (state) {
         this.setState({
             showLoading: state
         });
     };
+    Entry.prototype.bookPassthrough = function (book) {
+        this.setState({
+            book: book
+        });
+    };
     Entry.prototype.render = function () {
-        return (React.createElement("div", { className: "EntryPage" }, !this.state.showLoading ? React.createElement(InfoEntry_1.default, { frontEnd: this.props.frontEnd }) : React.createElement(LoadingScreen_1.default, null)));
+        return (React.createElement("div", { className: "EntryPage" }, !this.state.showLoading ? React.createElement(InfoEntry_1.default, { frontEnd: this.props.frontEnd }) : React.createElement(LoadingScreen_1.default, { bookObj: this.state.book })));
     };
     return Entry;
 }(React.Component));
@@ -236,7 +244,7 @@ var BookListing = /** @class */ (function (_super) {
                 React.createElement("img", { src: this.props.bookObj["IMAGE URL"], height: "100%" })),
             React.createElement("div", { className: "TextHolder" },
                 React.createElement("div", null,
-                    React.createElement("span", { className: "Title" }, this.props.bookObj["TITLE"].length > 30 ? this.props.bookObj["TITLE"].substring(0, 30) + "..." : this.props.bookObj["TITLE"]),
+                    React.createElement("span", { className: "Title" }, this.props.bookObj["TITLE"]),
                     React.createElement("br", null),
                     React.createElement("span", { className: "Author" }, this.props.bookObj["AURTHOR"]),
                     React.createElement("br", null),
@@ -320,7 +328,8 @@ var InfoEntry = /** @class */ (function (_super) {
         _this.state = {
             searchArea: "",
             recentSearch: [],
-            books: []
+            books: [],
+            searched: false
         };
         return _this;
     }
@@ -337,7 +346,8 @@ var InfoEntry = /** @class */ (function (_super) {
         axios_1.default.post("/search/" + this.state.searchArea).then(function (response) {
             // console.log("Response: " + JSON.stringify(response.data));
             _this.setState({
-                recentSearch: response.data
+                recentSearch: response.data,
+                searched: true
             });
             _this.searchToBooks();
         });
@@ -346,7 +356,7 @@ var InfoEntry = /** @class */ (function (_super) {
         var _this = this;
         var queryLimit = 0;
         this.state.recentSearch.forEach(function (val) {
-            if (queryLimit < 6) {
+            if (queryLimit < 14) {
                 queryLimit++;
                 axios_1.default.post("/books/" + val.ref).then(function (response) {
                     _this.addBook(response.data, val);
@@ -379,21 +389,20 @@ var InfoEntry = /** @class */ (function (_super) {
         var _this = this;
         return (React.createElement("div", { className: "InfoEntryPage" },
             React.createElement("div", { className: "InfoContainer" },
-                React.createElement("div", { className: "InfoTitleSection" },
-                    React.createElement("h1", null, "Cover This")),
+                !this.state.searched ? React.createElement("div", { className: "InfoTitleSection" },
+                    React.createElement("h1", null, "Cover This"),
+                    React.createElement("span", null, "For all your booking needs")) : "",
                 React.createElement("div", { className: "InfoDataSection" },
                     React.createElement("h3", null, "Insert Summary"),
-                    React.createElement("input", { type: "text", title: "bookTitle", value: this.state.searchArea, onChange: this.handleSearchChange.bind(this), onSubmit: function () { _this.searchBooks(); } }),
+                    React.createElement("input", { type: "text", title: "bookTitle", placeholder: ">", value: this.state.searchArea, onChange: this.handleSearchChange.bind(this), onSubmit: function () { _this.searchBooks(); } }),
                     React.createElement("br", null),
                     React.createElement("a", { href: "#", onClick: function (e) { e.preventDefault(); _this.searchBooks(); } }, "Begin")),
-                React.createElement("div", { className: "InfoSearchedBooks" },
-                    React.createElement("h3", null, "Books"),
-                    this.state.books.map(function (val) {
-                        // val.map((val2: any) => {
-                        // console.log("Rendering Book Listings");
-                        return (React.createElement(BookListing_1.default, { bookObj: val, frontEnd: _this.props.frontEnd }));
-                        // });
-                    })))));
+                this.state.searched ? (React.createElement("div", { className: "InfoSearchedBooks" }, this.state.books.map(function (val) {
+                    // val.map((val2: any) => {
+                    // console.log("Rendering Book Listings");
+                    return (React.createElement(BookListing_1.default, { bookObj: val, frontEnd: _this.props.frontEnd }));
+                    // });
+                }))) : "")));
     };
     return InfoEntry;
 }(React.Component));
@@ -453,6 +462,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var loadingMsg_1 = __webpack_require__(/*! ./../../service/loadingMsg */ "./client/src/service/loadingMsg.ts");
 __webpack_require__(/*! ./LoadingScreen.less */ "./client/src/components/Entry/LoadingScreen.less");
 var react_particles_js_1 = __webpack_require__(/*! react-particles-js */ "./node_modules/react-particles-js/lib/particles.js");
 // const params: IParticlesParams = {
@@ -475,68 +485,173 @@ var react_particles_js_1 = __webpack_require__(/*! react-particles-js */ "./node
 // }
 var LoadingScreen = /** @class */ (function (_super) {
     __extends(LoadingScreen, _super);
-    function LoadingScreen() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function LoadingScreen(props) {
+        return _super.call(this, props) || this;
     }
     LoadingScreen.prototype.render = function () {
-        return (React.createElement(react_particles_js_1.default, { params: {
-                "particles": {
-                    "number": {
-                        "value": 160,
-                        "density": {
-                            "enable": false
-                        }
-                    },
-                    "size": {
-                        "value": 3,
-                        "random": true,
-                        "anim": {
-                            "speed": 4,
-                            "size_min": 0.3
-                        }
-                    },
-                    "line_linked": {
-                        "enable": false
-                    },
-                    "move": {
-                        "random": true,
-                        "speed": 1,
-                        "direction": "top",
-                        "out_mode": "out"
-                    }
-                },
-                "interactivity": {
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "bubble"
+        return (React.createElement("div", { className: "LoadingScreenPage" },
+            React.createElement(react_particles_js_1.default, { params: {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 1600
+                            }
                         },
-                        "onclick": {
+                        "color": {
+                            "value": "#ff0099"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            },
+                            "image": {
+                                "src": "img/github.svg",
+                                "width": 100,
+                                "height": 100
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 4.008530152163807,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
                             "enable": true,
-                            "mode": "repulse"
+                            "distance": 176.3753266952075,
+                            "color": "#ff0099",
+                            "opacity": 0.6333477640418815,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 3.2,
+                            "direction": "top-left",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": true,
+                                "rotateX": 2485.28869434156,
+                                "rotateY": 2405.118091298284
+                            }
                         }
                     },
-                    "modes": {
-                        "bubble": {
-                            "distance": 250,
-                            "duration": 2,
-                            "size": 0
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "repulse"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
                         },
-                        "repulse": {
-                            "distance": 400,
-                            "duration": 4
+                        "modes": {
+                            "grab": {
+                                "distance": 400,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                            },
+                            "repulse": {
+                                "distance": 87.91208791208791,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
                         }
-                    }
-                }
-            } })
-        // <div className="LoadingScreenPage">
-        //     <h1>Test</h1>
-        // </div>
-        );
+                    },
+                }, style: {
+                    width: "100%",
+                    height: "100%"
+                } }),
+            React.createElement("div", { className: "LoadingContainer" },
+                React.createElement(LoadingScreenText, { bookObj: this.props.bookObj }))));
     };
     return LoadingScreen;
 }(React.Component));
 exports.default = LoadingScreen;
+var LoadingScreenText = /** @class */ (function (_super) {
+    __extends(LoadingScreenText, _super);
+    function LoadingScreenText(props) {
+        var _this = _super.call(this, props) || this;
+        _this.msgTime = 1500;
+        _this.timeoutObject = setInterval(function () {
+            _this.setState({
+                currentMsg: loadingMsg_1.LoaderMessages.getRandomMessage()
+            });
+            _this.timeoutA = setTimeout(function () {
+                _this.setState({
+                    currentMsg: _this.state.currentMsg + "."
+                });
+            }, _this.msgTime / 4);
+            _this.timeoutB = setTimeout(function () {
+                _this.setState({
+                    currentMsg: _this.state.currentMsg + "."
+                });
+            }, _this.msgTime / 4 * 2);
+            _this.timeoutC = setTimeout(function () {
+                _this.setState({
+                    currentMsg: _this.state.currentMsg + "."
+                });
+            }, _this.msgTime / 4 * 3);
+        }, _this.msgTime);
+        _this.state = {
+            currentMsg: loadingMsg_1.LoaderMessages.getRandomMessage()
+        };
+        return _this;
+    }
+    LoadingScreenText.prototype.componentWillUnmount = function () {
+        clearInterval(this.timeoutObject);
+        clearInterval(this.timeoutA);
+        clearInterval(this.timeoutB);
+        clearInterval(this.timeoutC);
+    };
+    LoadingScreenText.prototype.render = function () {
+        return (React.createElement("div", { className: "LoadingContent" },
+            React.createElement("h1", null, this.state.currentMsg),
+            React.createElement("h3", null,
+                "Calculating: ",
+                this.props.bookObj["TITLE"])));
+    };
+    return LoadingScreenText;
+}(React.Component));
+exports.LoadingScreenText = LoadingScreenText;
 
 
 /***/ }),
@@ -714,6 +829,7 @@ var FrontEndController = /** @class */ (function () {
     }
     FrontEndController.prototype.bookSelected = function (bookObj) {
         console.log("book:" + JSON.stringify(bookObj));
+        this.setBookPassthroughFunction(bookObj);
         this.showLoading();
     };
     FrontEndController.prototype.showData = function () {
@@ -727,7 +843,7 @@ var FrontEndController = /** @class */ (function () {
         this.showLoadingPage(true);
         // setTimeout(() => {
         //     this.showResults();
-        // },1000);
+        // },5000);
     };
     FrontEndController.prototype.showResults = function () {
         console.log("[Controller] Show Results");
@@ -740,9 +856,239 @@ var FrontEndController = /** @class */ (function () {
     FrontEndController.prototype.mountResultState = function (result) {
         this.showResultsPage = result;
     };
+    FrontEndController.prototype.mountBookSelectionPassThrough = function (func) {
+        this.setBookPassthroughFunction = func;
+    };
     return FrontEndController;
 }());
 exports.FrontEndController = FrontEndController;
+
+
+/***/ }),
+
+/***/ "./client/src/service/loadingMsg.ts":
+/*!******************************************!*\
+  !*** ./client/src/service/loadingMsg.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.msgList = [
+    "Reticulating Splines",
+    "Gathering Goblins",
+    "Lifting Weights",
+    "Pushing Pixels",
+    "Formulating Plan",
+    "Taking Break",
+    "Herding Ducks",
+    "Feeding Developers",
+    "Fishing for Change",
+    "Searching for Dancers",
+    "Waking Up Gnomes",
+    "Playing Chess",
+    "Building Igloos",
+    "Converting Celsius",
+    "Scanning Power Level",
+    "Delivering Presents",
+    "Finding Dragon Balls",
+    "Firing Lasers",
+    "Party Rocking",
+    "Walking up to the club",
+    "Righting wrongs",
+    "Building Lego",
+    "Assembling Avengers",
+    "Turning Down for What",
+    "Reaching 88mph",
+    "Pondering Existence",
+    "Battling Robots",
+    "Smashing Pots",
+    "Stomping Goombas",
+    "Doing Donuts",
+    "Entering Danger Zone",
+    "Talking to Mom",
+    "Chasing Squirrels",
+    "Setting Phasers to Stun",
+    "Doing Macarena",
+    "Dropping Bass",
+    "Removing Biebers",
+    "Performing Magic",
+    "Autotuning Kanye",
+    "Waxing Legs",
+    "Invading Space",
+    "Levelling Up",
+    "Generating Map",
+    "Conquering France",
+    "Piloting Tardis",
+    "Destroying Deathstar",
+    "Typing Letters",
+    "Making Code",
+    "Running Marathon",
+    "Shooting Pucks",
+    "Kicking Field Goals",
+    "Fighting Bad Guys",
+    "Driving Batmobile",
+    "Warming Up Kryptonite",
+    "Popping Popcorn",
+    "Creating Hashes",
+    "Spawning Boss",
+    "Evaluating Life Choices",
+    "Eating Ramen",
+    "Re-heating Leftovers",
+    "Petting Kittens",
+    "Walking Puppies",
+    "Catching Z’s",
+    "Jumping Rope",
+    "Declaring Variables",
+    "Yessing Doge",
+    "Recycling Memes",
+    "Tipping Fedora",
+    "Walking Runway",
+    "Counting to Ten",
+    "Booting Native Client",
+    "Launching App",
+    "Drawing Icons",
+    "Reading Instructions",
+    "Finding Screws",
+    "Completing Puzzles",
+    "Generating Volume Slider",
+    "Brightening Orange",
+    "Ordering Pizza",
+    "You Look Good Today",
+    "Clearing Screen",
+    "Stirring Pot",
+    "Mashing Potatoes",
+    "Banishing Evil",
+    "Taking Selfies",
+    "Accelerating Disks",
+    "Benching Network",
+    "Rocking Out",
+    "Grinding Mage",
+    "Studying Calculus",
+    "Playing N64",
+    "Racing GoKarts",
+    "Defeating Creepers",
+    "Blowing Game Cartridge",
+    "Choosing Pikachu",
+    "Postponing Half Life 3",
+    "Rushing Zergs",
+    "Rescuing Hostages",
+    "Typing Konami Code",
+    "Building Snowman",
+    "Letting it Snow",
+    "Burning HDMI Cords",
+    "Applying Filters",
+    "Taking Screenshot",
+    "Shaving Mustache",
+    "Growing Beard",
+    "Baking Muffins",
+    "Iterating Javascript",
+    "Attracting Venture Capital",
+    "Disrupting Industry",
+    "Tweeting Hashtags",
+    "Encrypting Lines",
+    "Obfuscating C",
+    "Enhancing License Plate",
+    "Running Diagnostic",
+    "Warming Hyperdrive",
+    "Calibrating Positions",
+    "Calculating Percentages",
+    "Revoking Licenses",
+    "Shedding Core",
+    "Dampening Gravity",
+    "Increasing Power",
+    "Checking Sensors",
+    "Indexing RSS",
+    "Programming PCI",
+    "Determining USB Position",
+    "Connecting to Bus",
+    "Inverting Ports",
+    "Bypassing Capacitor",
+    "Reversing Bandwidth Throttle",
+    "Testing AI",
+    "Virtualizing Microchip",
+    "Emulating Playstation",
+    "Synthesizing Drivers",
+    "Structuring Chlorophyll",
+    "Watering Plants",
+    "Ingesting Caffeine",
+    "Chugging Redbull",
+    "Parsing System",
+    "Navigating Arrays",
+    "Searching Google",
+    "Overflowing Stack",
+    "Compiling Binaries",
+    "Answering Emails",
+    "Migrating CSS",
+    "Backing Up Primaries",
+    "Rendering Dialogs",
+    "Reading RSS",
+    "Compressing Data",
+    "Rejecting Cloud",
+    "Evaluating Weissman Score",
+    "Purging Local Storage",
+    "Leaking Memory",
+    "Scripting Python",
+    "Grunting Ruby",
+    "Benching RAM",
+    "Determining Auxiliaries",
+    "Jiggling Internet",
+    "Ejecting Floppy",
+    "Fluctuating Objects",
+    "Spiking Reactor Core",
+    "Firing Bosons",
+    "Testing Processor",
+    "Debugging Prompts",
+    "Connecting Floats",
+    "Rounding Integers",
+    "Pronouncing Gigawatt",
+    "Inverting Transponders",
+    "Bypassing Silicon",
+    "Raising Funds",
+    "Caching Logs",
+    "Dithering Broadband",
+    "Eating Poutine",
+    "Rolling Rims to Win",
+    "Begging for Change",
+    "Chasing Waterfalls",
+    "Pumping Gas",
+    "Emptying Pipes",
+    "Hitting Piñata",
+    "Unleashing Freedom",
+    "Airbrushing Actors",
+    "FIling Taxes",
+    "Powering Mitochondria",
+    "Calculating Qi charge",
+    "Completing Geometry",
+    "Turning in Algebra",
+    "Solving for X",
+    "Benching Wattage",
+    "Kludging Playback Bar",
+    "Stringifying Json",
+    "Consuming Spaghetti Code",
+    "Deleting Comments",
+    "Transitioning to Django",
+    "Learning to Code",
+    "Battling Feature Creep",
+    "Losing Flappy Bird",
+    "Celebrating Good Times",
+    "Sharpening Pencils",
+    "Automating Processes",
+    "Attacking Godzilla",
+    "Carbonating Soda",
+    "Thinking of Witty Text"
+];
+var LoaderMessages = /** @class */ (function () {
+    function LoaderMessages() {
+    }
+    LoaderMessages.getRandomMessage = function () {
+        return exports.msgList[Math.floor(Math.random() * exports.msgList.length)];
+    };
+    return LoaderMessages;
+}());
+exports.LoaderMessages = LoaderMessages;
 
 
 /***/ }),
@@ -2446,7 +2792,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".BookListing {\n  display: flex;\n  align-items: stretch;\n  height: 4rem;\n  padding: 0.5rem;\n  margin-bottom: 0.5rem;\n  color: black;\n  text-decoration: none;\n}\n.BookListing:hover {\n  background-color: #e6e6e6;\n}\n.BookListing .TextHolder {\n  display: flex;\n  align-items: center;\n}\n.BookListing .TextHolder .Title {\n  font-weight: bolder;\n}\n.BookListing .TextHolder .Relevance {\n  color: gray;\n}\n.BookListing .ImgHolder {\n  width: 5rem;\n  display: block;\n}\n.BookListing .ImgHolder .Image {\n  height: 100%;\n}\n", ""]);
+exports.push([module.i, ".BookListing {\n  display: flex;\n  align-items: stretch;\n  height: 4rem;\n  padding: 0.5rem;\n  margin-bottom: 0.5rem;\n  margin-right: 0.5rem;\n  color: #FFFFFF;\n  width: 400px;\n  text-decoration: none;\n}\n.BookListing:hover {\n  background-color: #b3b3b3;\n}\n.BookListing .TextHolder {\n  display: flex;\n  align-items: center;\n  width: 300px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.BookListing .TextHolder .Title {\n  font-weight: bolder;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.BookListing .TextHolder .Author {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.BookListing .TextHolder .Relevance {\n  color: #cccccc;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.BookListing .ImgHolder {\n  width: 100px;\n  display: block;\n}\n.BookListing .ImgHolder .Image {\n  height: 100%;\n}\n", ""]);
 
 // exports
 
@@ -2465,7 +2811,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".InfoEntryPage {\n  width: 100vw;\n  height: 100vh;\n  overflow: hidden;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n.InfoEntryPage .InfoContainer {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection {\n  padding: 2rem;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection {\n  padding: 2rem;\n  border-left: solid 1px black;\n}\n.InfoEntryPage .InfoContainer .InfoSearchedBooks {\n  padding: 2rem;\n  border-left: solid 1px black;\n}\n", ""]);
+exports.push([module.i, ".InfoEntryPage {\n  height: 100vh;\n  width: 100vw;\n  overflow-x: hidden;\n  overflow-y: auto;\n  box-sizing: border-box;\n  background-color: #0e141e;\n  color: #FFFFFF;\n  padding-left: 10rem;\n  padding-right: 10rem;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n.InfoEntryPage .InfoContainer {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection {\n  padding: 2rem;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection h1 {\n  font-size: 9rem;\n  padding: 0px;\n  margin: 0px;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection span {\n  text-align: right;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection {\n  padding: 2rem;\n  border-left: solid 1px #FF0099;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection input {\n  color: #FFFFFF;\n  background-color: #0e141e;\n  border: none;\n  border-bottom: 1px solid #FF0099;\n  padding: 0.5rem;\n  font-size: 2rem;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection input:hover {\n  border-bottom: 1px solid #06A8E4;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection a {\n  display: inline-block;\n  color: #FFFFFF;\n  text-decoration: none;\n  margin: 1rem;\n  padding: 1rem;\n  border-radius: 3px;\n  background-color: #FF0099;\n  border: 1px solid #FF0099;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection a:hover {\n  background-color: #06A8E4;\n  border: 1px solid #06A8E4;\n}\n.InfoEntryPage .InfoContainer .InfoSearchedBooks {\n  padding: 2rem;\n  display: flex;\n  flex-wrap: wrap-reverse;\n  max-height: calc(100vh - 300px);\n}\n.InfoEntryPage .InfoContainer .InfoSearchedBooks:first {\n  border-left: solid 1px #FF0099;\n}\n", ""]);
 
 // exports
 
@@ -2484,7 +2830,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".LoadingScreenPage {\n  width: 100vw;\n  height: 100vh;\n  overflow: hidden;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n", ""]);
+exports.push([module.i, ".LoadingScreenPage {\n  width: 100vw;\n  height: 100vh;\n  overflow: hidden;\n  background-color: #0e141e;\n}\n.LoadingScreenPage .LoadingContainer {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.LoadingScreenPage .LoadingContainer .LoadingContent {\n  color: #FFFFFF;\n}\n", ""]);
 
 // exports
 

@@ -1,7 +1,17 @@
+@import "./../../variables.less";
+
 .InfoEntryPage {
-    width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    background-color: @bg-main;
+    color: @text-main;
+
+    padding-left: 10rem;
+    padding-right: 10rem;
 
     display: flex;
     justify-content: center;
@@ -17,20 +27,68 @@
 
         .InfoTitleSection {
             padding: 2rem;
+            
+            h1 {
+                font-size: 9rem;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            span {
+                text-align: right;
+            }
         }
 
         .InfoDataSection {
             padding: 2rem;
 
-            border-left: solid 1px black;
+            border-left: solid 1px @colour-main-secondary;
+
+            input {
+                color: @text-main;
+                background-color: @bg-main;
+                border: none;
+                border-bottom: 1px solid @colour-main-secondary;
+                padding: 0.5rem;
+                font-size: 2rem;
+
+                &:hover {
+                    border-bottom: 1px solid @colour-main-primary;
+                }
+            }
+
+            a {
+                display: inline-block;
+                color: @text-main;
+                text-decoration: none;
+                margin: 1rem;
+                padding: 1rem;
+                border-radius: @size-radius;
+                background-color: @colour-main-secondary;
+                border: 1px solid @colour-main-secondary;
+
+                &:hover {
+                    
+                background-color: @colour-main-primary;
+                border: 1px solid @colour-main-primary;
+                }
+            }
         }
 
         .InfoSearchedBooks {
             padding: 2rem;
 
-            border-left: solid 1px black;
+            display: flex;
+            // justify-content: flex-start;
+            // align-content: flex-start;
+            // align-items: center;
+            flex-wrap: wrap-reverse;
 
-            
+            max-height: calc(100vh - 300px);
+
+            &:first {
+                border-left: solid 1px @colour-main-secondary;
+            }
         }
     }
 }

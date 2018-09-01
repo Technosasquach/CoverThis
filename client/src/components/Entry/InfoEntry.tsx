@@ -16,7 +16,8 @@ export default class InfoEntry extends React.Component<{
 },{
     searchArea: string,
     recentSearch: ResponseObj[],
-    books: any[]
+    books: any[],
+    searched: boolean
 }> {
 
     constructor(props: any) {
@@ -24,7 +25,8 @@ export default class InfoEntry extends React.Component<{
         this.state = {
             searchArea: "",
             recentSearch: [],
-            books: []
+            books: [],
+            searched: false
         }
     }
 
@@ -44,7 +46,8 @@ export default class InfoEntry extends React.Component<{
             ).then((response: AxiosResponse) => {
                 // console.log("Response: " + JSON.stringify(response.data));
                 this.setState({
-                    recentSearch: response.data
+                    recentSearch: response.data,
+                    searched: true
                 })
                 this.searchToBooks();
             });
@@ -53,7 +56,7 @@ export default class InfoEntry extends React.Component<{
         searchToBooks() {
             let queryLimit = 0;
             this.state.recentSearch.forEach((val: any) => {
-                if(queryLimit < 6) {
+                if(queryLimit < 14) {
                     queryLimit++;
                     axios.post(
                         `/books/${val.ref}`,
@@ -98,14 +101,16 @@ export default class InfoEntry extends React.Component<{
         return (
             <div className="InfoEntryPage">
                 <div className="InfoContainer">
-                    <div className="InfoTitleSection">
+                    {!this.state.searched ? <div className="InfoTitleSection">
                         <h1>Cover This</h1>
-                    </div>
+                        <span>For all your booking needs</span>
+                    </div> : ""}
                     <div className="InfoDataSection">
                         <h3>Insert Summary</h3>
                         <input 
                             type="text" 
                             title="bookTitle" 
+                            placeholder=">"
                             value={this.state.searchArea} 
                             onChange={this.handleSearchChange.bind(this)}
                             onSubmit={()=>{this.searchBooks()}}
@@ -113,15 +118,15 @@ export default class InfoEntry extends React.Component<{
                         <br/>
                         <a href="#" onClick={(e)=>{e.preventDefault(); this.searchBooks();}}>Begin</a>
                     </div>
-                    <div className="InfoSearchedBooks">
-                        <h3>Books</h3>
+                    {this.state.searched ? (<div className="InfoSearchedBooks">
+                        {/* <h3>Books</h3> */}
                         {this.state.books.map((val: any[]) => {
                             // val.map((val2: any) => {
                                 // console.log("Rendering Book Listings");
                                 return(<BookListing bookObj={val} frontEnd={this.props.frontEnd}/>);
                             // });
                         })}
-                    </div>
+                    </div>) : ""}
                 </div>
             </div>
         );

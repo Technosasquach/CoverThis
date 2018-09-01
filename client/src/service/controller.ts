@@ -3,6 +3,7 @@ export class FrontEndController {
 
     public bookSelected(bookObj: any) {
         console.log("book:" + JSON.stringify(bookObj));
+        this.setBookPassthroughFunction(bookObj);
         this.showLoading();
     }
 
@@ -18,7 +19,7 @@ export class FrontEndController {
         this.showLoadingPage(true);
         // setTimeout(() => {
         //     this.showResults();
-        // },1000);
+        // },5000);
     }
 
     public showResults() {
@@ -36,5 +37,11 @@ export class FrontEndController {
     
     public mountResultState(result: Function) {
         this.showResultsPage = result;
+    }
+
+    setBookPassthroughFunction: Function;
+
+    public mountBookSelectionPassThrough(func: Function) {
+        this.setBookPassthroughFunction = func;
     }
 }

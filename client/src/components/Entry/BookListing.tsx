@@ -23,7 +23,8 @@ export default class BookListing extends React.Component<{bookObj: any, frontEnd
                 </div>
                 <div className="TextHolder">
                     <div>
-                        <span className="Title">{this.props.bookObj["TITLE"].length > 30 ? this.props.bookObj["TITLE"].substring(0,30) + "..." : this.props.bookObj["TITLE"]}</span>
+                        {/* <span className="Title">{this.props.bookObj["TITLE"].length > 30 ? this.props.bookObj["TITLE"].substring(0,30) + "..." : this.props.bookObj["TITLE"]}</span> */}
+                        <span className="Title">{this.props.bookObj["TITLE"]}</span>
                         <br/>
                         <span className="Author">{this.props.bookObj["AURTHOR"]}</span>
                         <br/>
