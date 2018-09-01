@@ -1,0 +1,63 @@
+@import "./../../variables.less";
+
+@max-width: 400px;
+@img-container: 100px;
+
+.BookListing {
+
+    display: flex;
+    align-items: stretch;
+    height: 4rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    color: @text-main;
+    width: @max-width;
+
+    text-decoration: none;
+
+    &:hover {
+        background-color: darken(white, 30%);
+    }
+
+    .TextHolder {
+
+        display: flex;
+        align-items: center;
+        width: @max-width - @img-container;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        .Title {
+            font-weight: bolder;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    
+        .Author {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .Relevance {
+            color: darken(@text-main,20%);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .ImgHolder {
+
+        width: @img-container;
+        display: block;
+
+        .Image {
+            height: 100%;
+        }
+    }
+}

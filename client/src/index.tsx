@@ -1,24 +1,45 @@
 import * as React from "react";
 import { render } from "react-dom";
 
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 
-import "./public/bootstrap.min.css";
+// import "./public/bootstrap.min.css";
+import "./index.less";
 
-export default class Root extends React.Component {
+import Entry from "./components/Entry";
+import Results from "./components/Result";
 
-    componentDidMount() {
-        console.log("[CORE] React has loaded");
+import { FrontEndController } from "./service/controller";
+
+export default class Root extends React.Component<{},{showResults: boolean}> {
+
+    frontEndController = new FrontEndController();
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            showResults: false
+        }
+        this.showResultsPage = this.showResultsPage.bind(this);
     }
 
-    componentWillMount() {
-        console.log("[CORE] React will load");
+    componentDidMount() {
+        this.frontEndController.mountResultState(this.showResultsPage);
+        console.log("[CORE] React has loaded");
+    }
+    componentWillMount() { console.log("[CORE] React will load"); }
+
+    showResultsPage(state: boolean) {
+        this.setState({
+            showResults: state
+        });
     }
 
     render() {
         return (
-            <Navbar>
-            </Navbar>
+            <div className="app">
+                { this.state.showResults ? <Results frontEnd={this.frontEndController} /> : <Entry frontEnd={this.frontEndController} /> }
+            </div>
         );
     }
 }
