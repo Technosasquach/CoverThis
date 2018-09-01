@@ -7,7 +7,12 @@ const app = express_1.Router();
 // app.get("*", (req: Request, res: Response) => {
 // });
 app.post("/search/:searchText", (req, res) => {
-    const searchResults = core_1.elastSearch.search(req.params.searchText + "");
+    const searchResults = core_1.elastSearch.search(req.params.searchText + "", {
+        fields: {
+            TITLE: { boost: 2 },
+            AURTHOR: { boost: 1 }
+        }
+    });
     res.json(searchResults);
 });
 app.post("/books/:id", (req, res) => {

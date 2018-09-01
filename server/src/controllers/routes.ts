@@ -10,7 +10,15 @@ const app = Router();
 // });
 
 app.post("/search/:searchText", (req: Request, res: Response) => {
-    const searchResults = elastSearch.search(req.params.searchText + "");
+    const searchResults = elastSearch.search(
+        req.params.searchText + "",
+        {
+            fields: {
+                TITLE: {boost: 2},
+                AURTHOR: {boost: 1}
+            }
+        }
+    );
     res.json(searchResults);
 });
 

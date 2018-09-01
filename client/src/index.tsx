@@ -9,20 +9,36 @@ import "./index.less";
 import Entry from "./components/Entry";
 import Results from "./components/Result";
 
-export default class Root extends React.Component {
+import { FrontEndController } from "./service/controller";
 
-    componentDidMount() { console.log("[CORE] React has loaded"); }
+export default class Root extends React.Component<{},{showResults: boolean}> {
+
+    frontEndController = new FrontEndController();
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            showResults: false
+        }
+        this.showResultsPage = this.showResultsPage.bind(this);
+    }
+
+    componentDidMount() {
+        this.frontEndController.mountResultState(this.showResultsPage);
+        console.log("[CORE] React has loaded");
+    }
     componentWillMount() { console.log("[CORE] React will load"); }
 
-    searchTrig() {
-
+    showResultsPage(state: boolean) {
+        this.setState({
+            showResults: state
+        });
     }
 
     render() {
         return (
             <div className="app">
-                <Entry payloadFunc={this.searchTrig}/>
-                <Results/>
+                { this.state.showResults ? <Results frontEnd={this.frontEndController} /> : <Entry frontEnd={this.frontEndController} /> }
             </div>
         );
     }

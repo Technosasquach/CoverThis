@@ -2,20 +2,22 @@ import * as React from "react";
 
 import "./BookListing.less";
 
-export default class BookListing extends React.Component<{bookObj: any, callBackFunction: Function},{}> {
+import { FrontEndController } from "./../../service/controller";
+
+export default class BookListing extends React.Component<{bookObj: any, frontEnd: FrontEndController},{}> {
 
     constructor(props: any) {
         super(props);
     }
 
-    componentDidMount() {
-        console.log("RENDERING BOOKLIST");
-        console.log(JSON.stringify(this.props.bookObj));
-    }
+    // componentDidMount() {
+    //     console.log("RENDERING BOOKLIST");
+    //     console.log(JSON.stringify(this.props.bookObj));
+    // }
 
     render() {
         return (
-            <a className="BookListing">
+            <a href="#" onClick={(event)=>{event.preventDefault(); this.props.frontEnd.bookSelected(this.props.bookObj)}} className="BookListing">
                 <div className="ImgHolder">
                     <img src={this.props.bookObj["IMAGE URL"]} height="100%"></img>
                 </div>
