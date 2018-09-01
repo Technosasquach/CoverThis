@@ -2,7 +2,7 @@ import pandas as pd
 import Scraper2
 import time
 
-csv = pd.read_csv("./book30-listing-test.csv")
+csv = pd.read_csv("./data_set2.csv", encoding = "ISO-8859-1")
 ids = csv['AMAZON ID'].values
 images = csv['IMAGE URL'].values
 title = csv['TITLE'].values
@@ -45,8 +45,8 @@ def doit(s, e):
 
 
 
-length = 5000
-runningTotal = 2500
+length = 1000
+runningTotal = 0
 while runningTotal < length:
 	stat = runningTotal
 	for i in range(20):
@@ -65,4 +65,4 @@ print("Finished 100%")
 
 
 #exporting data to csv file
-df.to_csv('data.csv')
+df.to_csv('data1.csv')
