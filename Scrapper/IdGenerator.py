@@ -13,7 +13,7 @@ new_images = []
 new_title = []
 new_summaries = []
 
-blockchain = 200
+blockchain = 20
 
 for i in range(len(ids)):
 	sum = Scraper2.get_summary(ids[i])
@@ -28,10 +28,9 @@ for i in range(len(ids)):
 		break
 		#printing to verify that it works
 
-finalInformation= {"Title": new_title, "Images_Link": new_images, "Summary": new_summaries}
+finalInformation= {"Title": new_title, "Images": new_images, "Summary": new_summaries}
 
-df = pd.DataFrame(finalInformation, columns = ['Title', 'Image_Link', 'Summary'])
+df = pd.DataFrame(finalInformation, columns = ['Title', 'Images', 'Summary'])
 
-#exporting data to csv file	
+#exporting data to csv file
 df.to_csv('data.csv')
-
