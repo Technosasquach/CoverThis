@@ -3,21 +3,23 @@ import { render } from "react-dom";
 
 // import Navbar from "./components/Navbar";
 
-import "./public/bootstrap.min.css";
+// import "./public/bootstrap.min.css";
+import "./index.less";
+
+import Entry from "./components/Entry";
+import Results from "./components/Result";
 
 export default class Root extends React.Component {
 
-    componentDidMount() {
-        console.log("[CORE] React has loaded");
-    }
-
-    componentWillMount() {
-        console.log("[CORE] React will load");
-    }
+    componentDidMount() { console.log("[CORE] React has loaded"); }
+    componentWillMount() { console.log("[CORE] React will load"); }
 
     render() {
         return (
-            <h1>Hello</h1>
+            <div className="app">
+                <Entry/>
+                <Results/>
+            </div>
         );
     }
 }

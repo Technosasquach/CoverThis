@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"version":3,"file":"routes.js","sourceRoot":"","sources":["../../src/controllers/routes.ts"],"names":[],"mappings":";;AAAA,qCAAkE;AAClE,MAAM,GAAG,GAAG,gBAAM,EAAE,CAAC;AAErB,GAAG,CAAC,IAAI,CAAC,GAAG,EAAE,CAAC,GAAY,EAAE,GAAa,EAAE,EAAE;IAC1C,GAAG,CAAC,IAAI,CAAC,EAAE,OAAO,EAAE,eAAe,EAAC,CAAC,CAAC;AAC1C,CAAC,CAAC,CAAC;AAEH,kBAAe,GAAG,CAAC"}
-=======
 {"version":3,"file":"routes.js","sourceRoot":"","sources":["../../src/controllers/routes.ts"],"names":[],"mappings":";;AAAA,qCAAkE;AAClE,MAAM,GAAG,GAAG,gBAAM,EAAE,CAAC;AAErB,kDAAkD;AAElD,MAAM;AAEN,kBAAe,GAAG,CAAC"}
->>>>>>> feature-frontend
