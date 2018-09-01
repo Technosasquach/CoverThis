@@ -1,5 +1,6 @@
 import pandas as pd
 import Scraper2
+import time
 
 csv = pd.read_csv("./book30-listing-test.csv")
 ids = csv['AMAZON ID'].values
@@ -19,13 +20,14 @@ new_category = []
 
 
 total = len(ids)
-max = -1
+max = 100
 if max > 0:
 	total = max
 counter = 0
 
 for i in range(len(ids)):
 	sum = Scraper2.get_summary(ids[i])
+	time.sleep(1)
 	if sum != "":
 		#print(sum)
 		new_id.append(ids[i])
