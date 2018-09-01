@@ -14,10 +14,14 @@ export default class Root extends React.Component {
     componentDidMount() { console.log("[CORE] React has loaded"); }
     componentWillMount() { console.log("[CORE] React will load"); }
 
+    searchTrig() {
+
+    }
+
     render() {
         return (
             <div className="app">
-                <Entry/>
+                <Entry payloadFunc={this.searchTrig}/>
                 <Results/>
             </div>
         );
