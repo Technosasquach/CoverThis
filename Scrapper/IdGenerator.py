@@ -45,16 +45,17 @@ def doit(s, e):
 
 
 
-length = 100
-runningTotal = 0
+length = 5000
+runningTotal = 2500
 while runningTotal < length:
 	stat = runningTotal
 	for i in range(20):
 		runningTotal = runningTotal + 1
 	en = runningTotal
 	doit(stat, en)
+	
 	time.sleep(5)
-
+	print("Break, running total is " + str(runningTotal))
 
 
 
