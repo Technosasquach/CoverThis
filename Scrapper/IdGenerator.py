@@ -45,8 +45,8 @@ def doit(s, e):
 
 
 
-length = 1000
-runningTotal = 0
+length = 2000
+runningTotal = 1001
 while runningTotal < length:
 	stat = runningTotal
 	for i in range(20):
@@ -65,4 +65,4 @@ print("Finished 100%")
 
 
 #exporting data to csv file
-df.to_csv('data1.csv')
+df.to_csv('data2.csv')
