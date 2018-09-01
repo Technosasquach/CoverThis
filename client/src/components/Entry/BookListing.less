@@ -1,0 +1,40 @@
+.BookListing {
+
+    display: flex;
+    align-items: stretch;
+    height: 4rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+        background-color: darken(white, 10%);
+    }
+
+    .TextHolder {
+
+        display: flex;
+        align-items: center;
+
+        .Title {
+            font-weight: bolder;
+        }
+    
+        .Author {
+            
+        }
+
+        .Relevance {
+            color: gray;
+        }
+    }
+
+    .ImgHolder {
+
+        width: 5rem;
+        display: block;
+
+        .Image {
+            height: 100%;
+        }
+    }
+}

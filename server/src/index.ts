@@ -1,5 +1,4 @@
 import { App, Server } from "./core";
-import * as MQTTService from "./controllers/mqtt";
 
 // Start Express server.
 // ----------------------------------------------------------------------------

@@ -46,12 +46,23 @@ if (app.get("env") === "production") {
     app.locals.pretty = true;
 }
 
+
+import { Index } from "elasticlunr";
+export const elastSearch = new Index();
+elastSearch.addField("TITLE");      // Title of book
+elastSearch.addField("AURTHOR");    // Author
+elastSearch.addField("CATEGORY");   // Category
+elastSearch.setRef("AMAZON ID");    // ID
+import { books } from "./data/bookListing";
+books.forEach((val: any) => {
+    elastSearch.addDoc(val);
+});
+
 import routes from "./controllers/routes";
 app.use("/", routes);
 
 // The last route run
 import { Request, Response } from "express";
-
 app.get("*", (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, "./../../../client/dist/index.html"));
 });
