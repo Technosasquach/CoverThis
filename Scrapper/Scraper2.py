@@ -10,11 +10,11 @@ def get_summary(id):
     checker = re.findall(r"We're sorry. The Web address you entered is not a functioning page on our site", yeet, re.I|re.M)
 
     if(checker == []):
-        matches = re.findall(r' <noscript[\s\S]*?\/', yeet, re.I |re.M)
+        matches = re.findall(r' <noscript[\s\S]*?\/div', yeet, re.I |re.M)
         if(matches != []):
 	        text = matches[0]
 	        text = text[20:]
-	        text = text[:-2]
+	        text = text[:-5]
 	        text = text.replace("<li>", " ")
 	        yoat = text
     return yoat
