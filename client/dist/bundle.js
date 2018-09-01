@@ -140,6 +140,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 __webpack_require__(/*! ./Entry.less */ "./client/src/components/Entry.less");
 var InfoEntry_1 = __webpack_require__(/*! ./Entry/InfoEntry */ "./client/src/components/Entry/InfoEntry.tsx");
 var LoadingScreen_1 = __webpack_require__(/*! ./Entry/LoadingScreen */ "./client/src/components/Entry/LoadingScreen.tsx");
+var react_particles_js_1 = __webpack_require__(/*! react-particles-js */ "./node_modules/react-particles-js/lib/particles.js");
 var Entry = /** @class */ (function (_super) {
     __extends(Entry, _super);
     function Entry(props) {
@@ -167,7 +168,118 @@ var Entry = /** @class */ (function (_super) {
         });
     };
     Entry.prototype.render = function () {
-        return (React.createElement("div", { className: "EntryPage" }, !this.state.showLoading ? React.createElement(InfoEntry_1.default, { frontEnd: this.props.frontEnd }) : React.createElement(LoadingScreen_1.default, { bookObj: this.state.book })));
+        return (React.createElement("div", { className: "EntryPage" },
+            React.createElement(react_particles_js_1.default, { params: {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 1600
+                            }
+                        },
+                        "color": {
+                            "value": "#ff0099"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            },
+                            "image": {
+                                "src": "img/github.svg",
+                                "width": 100,
+                                "height": 100
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.0,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 4.008530152163807,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 176.3753266952075,
+                            "color": "#ff0099",
+                            "opacity": 0.6333477640418815,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 3.2,
+                            "direction": "top-left",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": true,
+                                "rotateX": 2485.28869434156,
+                                "rotateY": 2405.118091298284
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "repulse"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 400,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                            },
+                            "repulse": {
+                                "distance": 87.91208791208791,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                }, style: {
+                    width: "100%",
+                    height: "100%"
+                } }),
+            !this.state.showLoading ? React.createElement(InfoEntry_1.default, { frontEnd: this.props.frontEnd }) : React.createElement(LoadingScreen_1.default, { bookObj: this.state.book, frontEnd: this.props.frontEnd })));
     };
     return Entry;
 }(React.Component));
@@ -321,6 +433,20 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 __webpack_require__(/*! ./InfoEntry.less */ "./client/src/components/Entry/InfoEntry.less");
 var BookListing_1 = __webpack_require__(/*! ./BookListing */ "./client/src/components/Entry/BookListing.tsx");
+var InfoEntryWrapper = /** @class */ (function (_super) {
+    __extends(InfoEntryWrapper, _super);
+    function InfoEntryWrapper() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    // Render
+    // -----------------------------
+    InfoEntryWrapper.prototype.render = function () {
+        return (React.createElement("div", { className: "app" },
+            React.createElement(InfoEntry, { frontEnd: this.props.frontEnd })));
+    };
+    return InfoEntryWrapper;
+}(React.Component));
+exports.default = InfoEntryWrapper;
 var InfoEntry = /** @class */ (function (_super) {
     __extends(InfoEntry, _super);
     function InfoEntry(props) {
@@ -406,7 +532,7 @@ var InfoEntry = /** @class */ (function (_super) {
     };
     return InfoEntry;
 }(React.Component));
-exports.default = InfoEntry;
+exports.InfoEntry = InfoEntry;
 
 
 /***/ }),
@@ -464,7 +590,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var loadingMsg_1 = __webpack_require__(/*! ./../../service/loadingMsg */ "./client/src/service/loadingMsg.ts");
 __webpack_require__(/*! ./LoadingScreen.less */ "./client/src/components/Entry/LoadingScreen.less");
-var react_particles_js_1 = __webpack_require__(/*! react-particles-js */ "./node_modules/react-particles-js/lib/particles.js");
 // const params: IParticlesParams = {
 //     "particles": {
 //         "number": {
@@ -490,118 +615,8 @@ var LoadingScreen = /** @class */ (function (_super) {
     }
     LoadingScreen.prototype.render = function () {
         return (React.createElement("div", { className: "LoadingScreenPage" },
-            React.createElement(react_particles_js_1.default, { params: {
-                    "particles": {
-                        "number": {
-                            "value": 80,
-                            "density": {
-                                "enable": true,
-                                "value_area": 1600
-                            }
-                        },
-                        "color": {
-                            "value": "#ff0099"
-                        },
-                        "shape": {
-                            "type": "circle",
-                            "stroke": {
-                                "width": 0,
-                                "color": "#000000"
-                            },
-                            "polygon": {
-                                "nb_sides": 5
-                            },
-                            "image": {
-                                "src": "img/github.svg",
-                                "width": 100,
-                                "height": 100
-                            }
-                        },
-                        "opacity": {
-                            "value": 0.5,
-                            "random": false,
-                            "anim": {
-                                "enable": false,
-                                "speed": 1,
-                                "opacity_min": 0.1,
-                                "sync": false
-                            }
-                        },
-                        "size": {
-                            "value": 4.008530152163807,
-                            "random": true,
-                            "anim": {
-                                "enable": false,
-                                "speed": 40,
-                                "size_min": 0.1,
-                                "sync": false
-                            }
-                        },
-                        "line_linked": {
-                            "enable": true,
-                            "distance": 176.3753266952075,
-                            "color": "#ff0099",
-                            "opacity": 0.6333477640418815,
-                            "width": 1
-                        },
-                        "move": {
-                            "enable": true,
-                            "speed": 3.2,
-                            "direction": "top-left",
-                            "random": true,
-                            "straight": false,
-                            "out_mode": "out",
-                            "bounce": false,
-                            "attract": {
-                                "enable": true,
-                                "rotateX": 2485.28869434156,
-                                "rotateY": 2405.118091298284
-                            }
-                        }
-                    },
-                    "interactivity": {
-                        "detect_on": "canvas",
-                        "events": {
-                            "onhover": {
-                                "enable": true,
-                                "mode": "repulse"
-                            },
-                            "onclick": {
-                                "enable": true,
-                                "mode": "push"
-                            },
-                            "resize": true
-                        },
-                        "modes": {
-                            "grab": {
-                                "distance": 400,
-                                "line_linked": {
-                                    "opacity": 1
-                                }
-                            },
-                            "bubble": {
-                                "distance": 400,
-                                "size": 40,
-                                "duration": 2,
-                            },
-                            "repulse": {
-                                "distance": 87.91208791208791,
-                                "duration": 0.4
-                            },
-                            "push": {
-                                "particles_nb": 4
-                            },
-                            "remove": {
-                                "particles_nb": 2
-                            }
-                        }
-                    },
-                }, style: {
-                    width: "100%",
-                    height: "100%"
-                } }),
             React.createElement("div", { className: "LoadingContainer" },
-                React.createElement(LoadingScreenText, { bookObj: this.props.bookObj }))));
+                React.createElement(LoadingScreenText, { bookObj: this.props.bookObj, frontEnd: this.props.frontEnd }))));
     };
     return LoadingScreen;
 }(React.Component));
@@ -643,11 +658,13 @@ var LoadingScreenText = /** @class */ (function (_super) {
         clearInterval(this.timeoutC);
     };
     LoadingScreenText.prototype.render = function () {
+        var _this = this;
         return (React.createElement("div", { className: "LoadingContent" },
             React.createElement("h1", null, this.state.currentMsg),
             React.createElement("h3", null,
                 "Calculating: ",
-                this.props.bookObj["TITLE"])));
+                this.props.bookObj["TITLE"]),
+            React.createElement("a", { href: "#", className: "LoadingBackBtn", onClick: function (e) { e.preventDefault(); _this.props.frontEnd.showData(); } }, "Back")));
     };
     return LoadingScreenText;
 }(React.Component));
@@ -838,12 +855,13 @@ var FrontEndController = /** @class */ (function () {
         this.showLoadingPage(false);
     };
     FrontEndController.prototype.showLoading = function () {
+        var _this = this;
         console.log("[Controller] Show Loading");
         this.showResultsPage(false);
         this.showLoadingPage(true);
-        // setTimeout(() => {
-        //     this.showResults();
-        // },5000);
+        setTimeout(function () {
+            _this.showResults();
+        }, 7000);
     };
     FrontEndController.prototype.showResults = function () {
         console.log("[Controller] Show Results");
@@ -2773,7 +2791,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".EntryPage {\n  height: 100vh;\n  width: 100vw;\n  overflow: hidden;\n}\n", ""]);
+exports.push([module.i, ".EntryPage {\n  height: 100vh;\n  width: 100vw;\n  overflow: hidden;\n  background-color: #011627;\n}\n", ""]);
 
 // exports
 
@@ -2811,7 +2829,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".InfoEntryPage {\n  height: 100vh;\n  width: 100vw;\n  overflow-x: hidden;\n  overflow-y: auto;\n  box-sizing: border-box;\n  background-color: #0e141e;\n  color: #FFFFFF;\n  padding-left: 10rem;\n  padding-right: 10rem;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n.InfoEntryPage .InfoContainer {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection {\n  padding: 2rem;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection h1 {\n  font-size: 9rem;\n  padding: 0px;\n  margin: 0px;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection span {\n  text-align: right;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection {\n  padding: 2rem;\n  border-left: solid 1px #FF0099;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection input {\n  color: #FFFFFF;\n  background-color: #0e141e;\n  border: none;\n  border-bottom: 1px solid #FF0099;\n  padding: 0.5rem;\n  font-size: 2rem;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection input:hover {\n  border-bottom: 1px solid #06A8E4;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection a {\n  display: inline-block;\n  color: #FFFFFF;\n  text-decoration: none;\n  margin: 1rem;\n  padding: 1rem;\n  border-radius: 3px;\n  background-color: #FF0099;\n  border: 1px solid #FF0099;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection a:hover {\n  background-color: #06A8E4;\n  border: 1px solid #06A8E4;\n}\n.InfoEntryPage .InfoContainer .InfoSearchedBooks {\n  padding: 2rem;\n  display: flex;\n  flex-wrap: wrap-reverse;\n  max-height: calc(100vh - 300px);\n}\n.InfoEntryPage .InfoContainer .InfoSearchedBooks:first {\n  border-left: solid 1px #FF0099;\n}\n", ""]);
+exports.push([module.i, ".InfoEntryPage {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n  height: 100vh;\n  width: 100vw;\n  overflow-x: hidden;\n  overflow-y: auto;\n  box-sizing: border-box;\n  color: #FFFFFF;\n  padding-left: 10rem;\n  padding-right: 10rem;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n.InfoEntryPage .InfoContainer {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection {\n  padding: 2rem;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection h1 {\n  font-size: 9rem;\n  padding: 0px;\n  margin: 0px;\n}\n.InfoEntryPage .InfoContainer .InfoTitleSection span {\n  float: right;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection {\n  padding: 2rem;\n  border-left: solid 1px #FF0099;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection input {\n  color: #FFFFFF;\n  background-color: #011627;\n  border: none;\n  border-bottom: 1px solid #06A8E4;\n  padding: 0.5rem;\n  font-size: 2rem;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection input:hover {\n  border-bottom: 1px solid #06A8E4;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection a {\n  display: inline-block;\n  color: #FFFFFF;\n  text-decoration: none;\n  margin: 1rem 0rem;\n  padding: 1rem;\n  border-radius: 3px;\n  background-color: #06A8E4;\n  border: 1px solid #06A8E4;\n}\n.InfoEntryPage .InfoContainer .InfoDataSection a:hover {\n  background-color: #FF3366;\n  border: 1px solid #FF3366;\n}\n.InfoEntryPage .InfoContainer .InfoSearchedBooks {\n  padding: 2rem;\n  display: flex;\n  flex-wrap: wrap-reverse;\n  max-height: calc(100vh - 300px);\n}\n.InfoEntryPage .InfoContainer .InfoSearchedBooks:first {\n  border-left: solid 1px #FF0099;\n}\n", ""]);
 
 // exports
 
@@ -2830,7 +2848,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".LoadingScreenPage {\n  width: 100vw;\n  height: 100vh;\n  overflow: hidden;\n  background-color: #0e141e;\n}\n.LoadingScreenPage .LoadingContainer {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.LoadingScreenPage .LoadingContainer .LoadingContent {\n  color: #FFFFFF;\n}\n", ""]);
+exports.push([module.i, ".LoadingScreenPage {\n  width: 100vw;\n  height: 100vh;\n  overflow: hidden;\n  position: absolute;\n  top: 0px;\n  left: 0px;\n}\n.LoadingScreenPage .LoadingContainer {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.LoadingScreenPage .LoadingContainer .LoadingContent {\n  color: #FFFFFF;\n}\n.LoadingScreenPage .LoadingContainer .LoadingContent .LoadingBackBtn {\n  position: absolute;\n  bottom: 1rem;\n  right: 1rem;\n  color: #FFFFFF;\n  text-decoration: none;\n  background-color: #FF0099;\n  padding: 1rem;\n  border-radius: 3px;\n}\n.LoadingScreenPage .LoadingContainer .LoadingContent .LoadingBackBtn:hover {\n  background-color: #06A8E4;\n}\n", ""]);
 
 // exports
 
@@ -2868,7 +2886,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "body {\n  box-sizing: border-box;\n  margin: 0px;\n  padding: 0px;\n  font: caption;\n  width: 100vw;\n  height: 100vh;\n}\n#root {\n  width: 100%;\n  height: 100%;\n  padding: 0px;\n  margin: 0px;\n}\n", ""]);
+exports.push([module.i, "body {\n  box-sizing: border-box;\n  margin: 0px;\n  padding: 0px;\n  font: caption;\n  width: 100vw;\n  height: 100vh;\n  background-color: #011627;\n}\n#root {\n  width: 100%;\n  height: 100%;\n  padding: 0px;\n  margin: 0px;\n}\n", ""]);
 
 // exports
 

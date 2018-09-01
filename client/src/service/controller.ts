@@ -17,9 +17,9 @@ export class FrontEndController {
         console.log("[Controller] Show Loading");
         this.showResultsPage(false);
         this.showLoadingPage(true);
-        // setTimeout(() => {
-        //     this.showResults();
-        // },5000);
+        setTimeout(() => {
+            this.showResults();
+        },7000);
     }
 
     public showResults() {

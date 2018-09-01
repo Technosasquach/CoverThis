@@ -3,7 +3,8 @@ import { LoaderMessages } from "./../../service/loadingMsg";
 
 import "./LoadingScreen.less";
 
-import Particles from "react-particles-js";
+// import Particles from "react-particles-js";
+import { FrontEndController } from "../../service/controller";
 
 // const params: IParticlesParams = {
 //     "particles": {
@@ -24,7 +25,7 @@ import Particles from "react-particles-js";
 //     }
 // }
 
-export default class LoadingScreen extends React.Component<{bookObj: any},{}> {
+export default class LoadingScreen extends React.Component<{bookObj: any, frontEnd: FrontEndController},{}> {
 
     constructor(props: any) {
         super(props);
@@ -33,7 +34,7 @@ export default class LoadingScreen extends React.Component<{bookObj: any},{}> {
     render() {
         return (
             <div className="LoadingScreenPage">
-                <Particles 
+                {/* <Particles 
                     params={{
                         "particles": {
                             "number": {
@@ -147,16 +148,16 @@ export default class LoadingScreen extends React.Component<{bookObj: any},{}> {
                         width: "100%",
                         height: "100%"
                     }}
-                />
+                /> */}
                 <div className="LoadingContainer">
-                    <LoadingScreenText bookObj={this.props.bookObj}/>
+                    <LoadingScreenText bookObj={this.props.bookObj} frontEnd={this.props.frontEnd}/>
                 </div>
             </div>
         );
     }
 }
 
-export class LoadingScreenText extends React.Component<{bookObj: any},{currentMsg: string}> {
+export class LoadingScreenText extends React.Component<{bookObj: any, frontEnd: FrontEndController},{currentMsg: string}> {
 
     constructor(props: any) {
         super(props);
@@ -202,6 +203,8 @@ export class LoadingScreenText extends React.Component<{bookObj: any},{currentMs
             <div className="LoadingContent">
                 <h1>{this.state.currentMsg}</h1>
                 <h3>Calculating: {this.props.bookObj["TITLE"]}</h3>
+
+                <a href="#" className="LoadingBackBtn" onClick={(e)=>{e.preventDefault(); this.props.frontEnd.showData()}}>Back</a>
             </div>
         );
     }
