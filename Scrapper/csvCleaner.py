@@ -2,7 +2,7 @@ import pandas as pd
 import re
 
 #Reading files and splitting the data arrays 
-csv = pd.read_csv("data1.csv")
+csv = pd.read_csv("data2.csv")
 ids = csv['ID'].values
 images = csv['Images'].values
 title = csv['Title'].values
@@ -43,4 +43,4 @@ df = pd.DataFrame(finalInformation, columns = ['Title', 'Images', 'Summary', 'Au
 print("Finished 100%")
 
 #exporting data to csv file
-df.to_csv('dataF1.csv')
+df.to_csv('dataF2.csv')
