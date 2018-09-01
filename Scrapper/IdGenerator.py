@@ -17,7 +17,12 @@ new_summaries = []
 new_aurthor = []
 new_category = []
 
-blockchain = 20
+
+total = len(ids)
+max = -1
+if max > 0:
+	total = max
+counter = 0
 
 for i in range(len(ids)):
 	sum = Scraper2.get_summary(ids[i])
@@ -30,13 +35,17 @@ for i in range(len(ids)):
 		new_aurthor.append(aurthor[i])
 		new_category.append(category[i])
 
-	blockchain = blockchain - 1
-	if blockchain == 0:
+	max = max - 1
+	if max == 0:
 		break
 		#printing to verify that it works
+	counter = counter + 1
+	print("--- WORKING --- (" + str(counter)+"/"+ str(total) + ")")
 
 finalInformation= {"Title": new_title, "Images": new_images, "Summary": new_summaries, "Aurthor": new_aurthor, "Category": new_category}
 df = pd.DataFrame(finalInformation, columns = ['Title', 'Images', 'Summary', 'Aurthor', 'Category'])
+print("Finished 100%")
+
 
 #exporting data to csv file
 df.to_csv('data.csv')
