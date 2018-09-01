@@ -16,5 +16,6 @@ new_summaries = []
 for i in range(len(ids)):
 	sum = Scraper2.get_summary(ids[i])
 	if sum != "":
-		new_id.append(i)
-		print(new_id)
+		print(sum)
+		new_id.append(ids[i])
+		#print(new_id)

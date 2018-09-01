@@ -11,9 +11,10 @@ def get_summary(id):
 
     if(checker == []):
         matches = re.findall(r' <noscript[\s\S]*?\/', yeet, re.I |re.M)
-        text = matches[0]
-        text = text[20:]
-        text = text[:-2]
-        text = text.replace("<li>", " ")
-        yoat = text
+        if(matches != []):
+	        text = matches[0]
+	        text = text[20:]
+	        text = text[:-2]
+	        text = text.replace("<li>", " ")
+	        yoat = text
     return yoat
