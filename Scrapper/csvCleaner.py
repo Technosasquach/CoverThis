@@ -1,4 +1,4 @@
-import panda as pd
+import pandas as pd
 import re
 
 #Reading files and splitting the data arrays 
@@ -23,7 +23,9 @@ final_summary = []
 for i in range(len(ids)):
 	#clearing data for summary
 	summaryFinal = re.sub(r'<[\s\S]*?>', " ", summary[i])
-	final_summary.append(summaryFinal[i])
+	summaryFinalClean = re.sub(r'&[#0-9]*?;', " ", summaryFinal)
+	summaryFinalClean2 = re.sub(r'&[\S]*?;', " ", summaryFinalClean)
+	final_summary.append(summaryFinalClean2)
 	#code for all the other bits of data
 	"""titleFinal = re.sub(r'<[sS]*?>', " ", title[i])
 	imageFinal = re.sub(r'<[sS]*?>', " ", images[i])
@@ -35,13 +37,10 @@ for i in range(len(ids)):
 	final_images.append(images[i])
 	final_aurthor.append(aurthor[i])
 	final_category.append(category[i])
-	max = max - 1
-	if max == 0:
-		break
-		#printing to verify that it works
-	counter = counter + 1
-	print("--- WORKING --- (" + str(counter)+"/"+ str(total) + ")")
-	
-finalInformation= {"Title": final_title, "Images": final_images, "Summary": final_summaries, "Aurthor": final_aurthor, "Category": final_category, "ID": final_ids}
+
+finalInformation= {"Title": final_title, "Images": final_images, "Summary": final_summary, "Aurthor": final_aurthor, "Category": final_category, "ID": final_id}
 df = pd.DataFrame(finalInformation, columns = ['Title', 'Images', 'Summary', 'Aurthor', 'Category', 'ID'])
 print("Finished 100%")
+
+#exporting data to csv file
+df.to_csv('dataF.csv')
