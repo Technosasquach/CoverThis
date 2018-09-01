@@ -1,6 +1,7 @@
 import pandas as pd
 import Scraper2
 import time
+import codecs
 
 csv = pd.read_csv("./data_set2.csv", encoding = "ISO-8859-1")
 ids = csv['AMAZON ID'].values
@@ -29,9 +30,14 @@ def doit(s, e):
 
 	for i in range(start, end):
 		sum = Scraper2.get_summary(ids[i])
-		time.sleep(1)
+
 		if sum != "":
 			#print(sum)
+			sum = sum.encode('utf-8')
+			f = codecs.open('yeet/'+ids[i]+'.txt','w','utf-8')
+			f.write(str(title[i]) + ',' + str(images[i]) + ',"' + str(sum) + '",' + str(aurthor[i]) + ',' + str(category[i]) + ',' + str(ids[i]))
+			f.close()
+
 			new_id.append(ids[i])
 			new_images.append(images[i])
 			new_title.append(title[i])
@@ -41,20 +47,19 @@ def doit(s, e):
 			#printing to verify that it works
 
 		counter = counter + 1
-		print("--- WORKING --- (" + str(counter)+"/"+ str(total) + ")")
+		print("--- WORKING --- (" + str(counter)+"/"+ str(total) + ") --- " + str(runningTotal))
 
 
 
-length = 2000
-runningTotal = 1001
+length = 8001
+runningTotal = 6001
 while runningTotal < length:
 	stat = runningTotal
 	for i in range(20):
 		runningTotal = runningTotal + 1
 	en = runningTotal
 	doit(stat, en)
-	
-	time.sleep(5)
+
 	print("Break, running total is " + str(runningTotal))
 
 
@@ -65,4 +70,4 @@ print("Finished 100%")
 
 
 #exporting data to csv file
-df.to_csv('data2.csv')
+df.to_csv('data4.csv')
