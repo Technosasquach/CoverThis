@@ -13,17 +13,15 @@ new_images = []
 new_title = []
 new_summaries = []
 
-blockchain = 10
+blockchain = 200
 
 for i in range(len(ids)):
 	sum = Scraper2.get_summary(ids[i])
-	#print(sum)
 	if sum != "":
 		#print(sum)
 		new_id.append(ids[i])
 		new_images.append(images[i])
 		new_title.append(title[i])
-		#print(title[i])
 		new_summaries.append(sum)
 	blockchain = blockchain - 1
 	if blockchain == 0:
@@ -32,8 +30,8 @@ for i in range(len(ids)):
 
 finalInformation= {"Title": new_title, "Images_Link": new_images, "Summary": new_summaries}
 
-raw_data = {"Title": new_title, "Images_Link": new_images, "Summary": new_summaries}
-print(new_title)
-df = pd.DataFrame(raw_data, columns = ['Title', 'Images_Link', 'Summary'])
-#exporting data to csv file
-df.to_csv('data.csv', sep=',', encoding='utf-8')
+df = pd.DataFrame(finalInformation, columns = ['Title', 'Image_Link', 'Summary'])
+
+#exporting data to csv file	
+df.to_csv('data.csv')
+
