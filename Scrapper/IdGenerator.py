@@ -44,8 +44,8 @@ for i in range(len(ids)):
 	counter = counter + 1
 	print("--- WORKING --- (" + str(counter)+"/"+ str(total) + ")")
 
-finalInformation= {"Title": new_title, "Images": new_images, "Summary": new_summaries, "Aurthor": new_aurthor, "Category": new_category}
-df = pd.DataFrame(finalInformation, columns = ['Title', 'Images', 'Summary', 'Aurthor', 'Category'])
+finalInformation= {"Title": new_title, "Images": new_images, "Summary": new_summaries, "Aurthor": new_aurthor, "Category": new_category, "ID": new_id}
+df = pd.DataFrame(finalInformation, columns = ['Title', 'Images', 'Summary', 'Aurthor', 'Category', 'ID'])
 print("Finished 100%")
 
 
