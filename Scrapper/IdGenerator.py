@@ -30,6 +30,7 @@ for i in range(len(ids)):
 		break
 		#printing to verify that it works
 
+finalInformation= {"Title": new_title, "Images_Link": new_images, "Summary": new_summaries}
 
 raw_data = {"Title": new_title, "Images_Link": new_images, "Summary": new_summaries}
 print(new_title)
