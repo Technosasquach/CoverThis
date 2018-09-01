@@ -35,6 +35,8 @@ for i in range(len(ids)):
 	counter = counter + 1
 	print("--- WORKING --- (" + str(counter)+"/"+ str(total) + ")")
 
+print("Finished 100%")
+
 finalInformation= {"Title": new_title, "Images": new_images, "Summary": new_summaries}
 
 df = pd.DataFrame(finalInformation, columns = ['Title', 'Images', 'Summary'])
