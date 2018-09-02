@@ -218,6 +218,8 @@ export class InfoEntry extends React.Component<{
         }
 
         addBook(bookObj: any, searchResults: ResponseObj) {
+            // console.log("bookObj: " + JSON.stringify(bookObj));
+            // console.log("searchResults: " + JSON.stringify(searchResults));
             this.setState({
                 books: [
                     ...this.state.books,
@@ -265,7 +267,7 @@ export class InfoEntry extends React.Component<{
                         <a href="#" onClick={(e)=>{e.preventDefault(); this.searchBooks();}}>Begin</a>
                     </div>
                     {this.state.searched ? (<div className="InfoSearchedBooks">
-                        {/* <h3>Books</h3> */}
+                        <h3>Books</h3>
                         {this.state.books.map((val: any[]) => {
                             // val.map((val2: any) => {
                                 // console.log("Rendering Book Listings");

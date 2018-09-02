@@ -157,14 +157,22 @@ export default class LoadingScreen extends React.Component<{bookObj: any, frontE
     }
 }
 
-export class LoadingScreenText extends React.Component<{bookObj: any, frontEnd: FrontEndController},{currentMsg: string}> {
+export class LoadingScreenText extends React.Component<{bookObj: any, frontEnd: FrontEndController},{currentMsg: string, loadingPercent: number}> {
 
     constructor(props: any) {
         super(props);
         this.state = {
-            currentMsg: LoaderMessages.getRandomMessage()
+            currentMsg: LoaderMessages.getRandomMessage(),
+            loadingPercent: 0
         }
     }
+
+    loadingBarTime = 30 * 1000;
+    loadingBarTimeout = setInterval(()=>{
+        this.setState({
+            loadingPercent: this.state.loadingPercent >= 100 ? this.state.loadingPercent : this.state.loadingPercent + 1
+        });
+    }, this.loadingBarTime / 100);
 
     msgTime = 1500;
     timeoutA: any;
@@ -196,13 +204,20 @@ export class LoadingScreenText extends React.Component<{bookObj: any, frontEnd: 
         clearInterval(this.timeoutA);
         clearInterval(this.timeoutB);
         clearInterval(this.timeoutC);
+        clearInterval(this.loadingBarTimeout);
     }
 
     render() {
         return (
             <div className="LoadingContent">
                 <h1>{this.state.currentMsg}</h1>
-                <h3>Calculating: {this.props.bookObj["TITLE"]}</h3>
+                <h3>Calculating: {this.props.bookObj["Title"]}</h3>
+                <div className="LoadingBar">
+                    <div className="Bar" style={{width: this.state.loadingPercent.toString() + "%" }}>
+                        <span>{this.state.loadingPercent + "%"}</span>
+                    </div>
+                </div>
+                {/* <p style={{maxWidth: "400px"}}>Summary: {this.props.bookObj["Summary"]}</p> */}
 
                 <a href="#" className="LoadingBackBtn" onClick={(e)=>{e.preventDefault(); this.props.frontEnd.showData()}}>Back</a>
             </div>

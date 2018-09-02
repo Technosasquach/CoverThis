@@ -44,12 +44,13 @@ else {
 }
 const elasticlunr_1 = require("elasticlunr");
 exports.elastSearch = new elasticlunr_1.Index();
-exports.elastSearch.addField("TITLE"); // Title of book
-exports.elastSearch.addField("AURTHOR"); // Author
-exports.elastSearch.addField("CATEGORY"); // Category
-exports.elastSearch.setRef("AMAZON ID"); // ID
-const bookListing_1 = require("./data/bookListing");
-bookListing_1.books.forEach((val) => {
+exports.elastSearch.addField("Title"); // Title of book
+exports.elastSearch.addField("Summary"); // Summary
+exports.elastSearch.addField("Aurthor"); // Author
+exports.elastSearch.addField("Category"); // Category
+exports.elastSearch.setRef("ID"); // ID
+const second_dump_1 = require("./data/second_dump");
+second_dump_1.books.forEach((val) => {
     exports.elastSearch.addDoc(val);
 });
 const routes_1 = require("./controllers/routes");

@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { elastSearch } from "./../core";
 
-import { books } from "./../data/bookListing";
+import { books } from "./../data/second_dump";
 
 const app = Router();
 
@@ -14,8 +14,9 @@ app.post("/search/:searchText", (req: Request, res: Response) => {
         req.params.searchText + "",
         {
             fields: {
-                TITLE: {boost: 2},
-                AURTHOR: {boost: 1}
+                Title: {boost: 2},
+                Summary: {boost: 2},
+                Aurthor: {boost: 1}
             }
         }
     );
@@ -26,7 +27,7 @@ app.post("/books/:id", (req: Request, res: Response) => {
     const foundBooks: any = [];
     let foundSomething = false;
     books.filter((val: any) => {
-        if(val["AMAZON ID"] == req.params.id) {
+        if(val["ID"] == req.params.id) {
             foundSomething = true;
             foundBooks.push(val);
         }

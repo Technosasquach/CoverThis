@@ -1,10 +1,33 @@
 
+// import axios, { AxiosResponse } from "axios";
+
+// interface APIResponse {
+//     d1: number,
+//     d2: number,
+//     d3: number,
+//     image: string
+// }
+
 export class FrontEndController {
 
+    // public result: APIResponse = undefined;
+    
     public bookSelected(bookObj: any) {
         console.log("book:" + JSON.stringify(bookObj));
         this.setBookPassthroughFunction(bookObj);
         this.showLoading();
+
+        // const instance = axios.create({
+        //     baseURL: 'https://localhost:5000/'
+        // });
+
+        // instance.post(
+        //     `/generateCover`, {
+        //         summary: bookObj.Summary,
+        //     }
+        // ).then((response: AxiosResponse) => {
+        //     // result:  = response.data;
+        // });
     }
 
     public showData() {

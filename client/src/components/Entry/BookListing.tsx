@@ -19,14 +19,13 @@ export default class BookListing extends React.Component<{bookObj: any, frontEnd
         return (
             <a href="#" onClick={(event)=>{event.preventDefault(); this.props.frontEnd.bookSelected(this.props.bookObj)}} className="BookListing animated fadeIn">
                 <div className="ImgHolder">
-                    <img src={this.props.bookObj["IMAGE URL"]} height="100%"></img>
+                    <img src={this.props.bookObj["Images"]} height="100%"></img>
                 </div>
                 <div className="TextHolder">
                     <div>
-                        {/* <span className="Title">{this.props.bookObj["TITLE"].length > 30 ? this.props.bookObj["TITLE"].substring(0,30) + "..." : this.props.bookObj["TITLE"]}</span> */}
-                        <span className="Title">{this.props.bookObj["TITLE"]}</span>
+                        <span className="Title">{this.props.bookObj["Title"]}</span>
                         <br/>
-                        <span className="Author">{this.props.bookObj["AURTHOR"]}</span>
+                        <span className="Author">{this.props.bookObj["Aurthor"]}</span>
                         <br/>
                         <span className="Relevance">Score: {this.props.bookObj["score"]}</span>
                     </div>

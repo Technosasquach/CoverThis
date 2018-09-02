@@ -19,7 +19,7 @@ export default class Root extends React.Component<{},{showResults: boolean}> {
     constructor(props: any) {
         super(props);
         this.state = {
-            showResults: true
+            showResults: false
         }
         this.showResultsPage = this.showResultsPage.bind(this);
     }
