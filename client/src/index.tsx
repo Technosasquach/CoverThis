@@ -8,6 +8,7 @@ import "./index.less";
 
 import Entry from "./components/Entry";
 import Results from "./components/Result";
+// import Navbar from "./components/Navbar";
 
 import { FrontEndController } from "./service/controller";
 
@@ -39,6 +40,7 @@ export default class Root extends React.Component<{},{showResults: boolean}> {
         return (
             <div className="app">
                 { this.state.showResults ? <Results frontEnd={this.frontEndController} /> : <Entry frontEnd={this.frontEndController} /> }
+                {/* <Navbar frontEnd={this.frontEndController} /> */}
             </div>
         );
     }

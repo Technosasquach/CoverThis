@@ -19,7 +19,7 @@ export class FrontEndController {
         this.showLoadingPage(true);
         setTimeout(() => {
             this.showResults();
-        },7000);
+        },2000);
     }
 
     public showResults() {
