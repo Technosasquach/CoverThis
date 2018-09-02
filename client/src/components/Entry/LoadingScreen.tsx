@@ -3,7 +3,8 @@ import { LoaderMessages } from "./../../service/loadingMsg";
 
 import "./LoadingScreen.less";
 
-import Particles from "react-particles-js";
+// import Particles from "react-particles-js";
+import { FrontEndController } from "../../service/controller";
 
 // const params: IParticlesParams = {
 //     "particles": {
@@ -24,7 +25,7 @@ import Particles from "react-particles-js";
 //     }
 // }
 
-export default class LoadingScreen extends React.Component<{bookObj: any},{}> {
+export default class LoadingScreen extends React.Component<{bookObj: any, frontEnd: FrontEndController},{}> {
 
     constructor(props: any) {
         super(props);
@@ -33,7 +34,7 @@ export default class LoadingScreen extends React.Component<{bookObj: any},{}> {
     render() {
         return (
             <div className="LoadingScreenPage">
-                <Particles 
+                {/* <Particles 
                     params={{
                         "particles": {
                             "number": {
@@ -147,23 +148,31 @@ export default class LoadingScreen extends React.Component<{bookObj: any},{}> {
                         width: "100%",
                         height: "100%"
                     }}
-                />
+                /> */}
                 <div className="LoadingContainer">
-                    <LoadingScreenText bookObj={this.props.bookObj}/>
+                    <LoadingScreenText bookObj={this.props.bookObj} frontEnd={this.props.frontEnd}/>
                 </div>
             </div>
         );
     }
 }
 
-export class LoadingScreenText extends React.Component<{bookObj: any},{currentMsg: string}> {
+export class LoadingScreenText extends React.Component<{bookObj: any, frontEnd: FrontEndController},{currentMsg: string, loadingPercent: number}> {
 
     constructor(props: any) {
         super(props);
         this.state = {
-            currentMsg: LoaderMessages.getRandomMessage()
+            currentMsg: LoaderMessages.getRandomMessage(),
+            loadingPercent: 0
         }
     }
+
+    loadingBarTime = 30 * 1000;
+    loadingBarTimeout = setInterval(()=>{
+        this.setState({
+            loadingPercent: this.state.loadingPercent >= 100 ? this.state.loadingPercent : this.state.loadingPercent + 1
+        });
+    }, this.loadingBarTime / 100);
 
     msgTime = 1500;
     timeoutA: any;
@@ -195,13 +204,22 @@ export class LoadingScreenText extends React.Component<{bookObj: any},{currentMs
         clearInterval(this.timeoutA);
         clearInterval(this.timeoutB);
         clearInterval(this.timeoutC);
+        clearInterval(this.loadingBarTimeout);
     }
 
     render() {
         return (
             <div className="LoadingContent">
                 <h1>{this.state.currentMsg}</h1>
-                <h3>Calculating: {this.props.bookObj["TITLE"]}</h3>
+                <h3>Calculating: {this.props.bookObj["Title"]}</h3>
+                <div className="LoadingBar">
+                    <div className="Bar" style={{width: this.state.loadingPercent.toString() + "%" }}>
+                        <span>{this.state.loadingPercent + "%"}</span>
+                    </div>
+                </div>
+                {/* <p style={{maxWidth: "400px"}}>Summary: {this.props.bookObj["Summary"]}</p> */}
+
+                <a href="#" className="LoadingBackBtn" onClick={(e)=>{e.preventDefault(); this.props.frontEnd.showData()}}>Back</a>
             </div>
         );
     }

@@ -5,7 +5,11 @@
     height: 100vh;
     overflow: hidden;
 
-    background-color: @bg-main;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    // background-color: @bg-main;
 
     .LoadingContainer {
         position: absolute;
@@ -20,6 +24,42 @@
 
         .LoadingContent {
             color: @text-main;
+
+            .LoadingBackBtn {
+                position: absolute;
+                bottom: 1rem;
+                right: 1rem;
+                color: @text-main;
+                text-decoration: none;
+                background-color: @colour-main-secondary;
+                padding: 1rem;
+                border-radius: @size-radius;
+
+                &:hover {
+                    background-color: @colour-main-primary;
+                }
+            }
+
+            .LoadingBar {
+                width: 100%;
+                border: 1px solid @bg-main;
+                box-sizing: border-box;
+
+                .Bar {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    background-color: @colour-main-primary;
+                    box-sizing: border-box;
+                    padding: 0.5rem;
+
+                    span {
+                        padding: 0px;
+                        margin: 0px;
+                    }
+                }
+            }
         }
     }
 }

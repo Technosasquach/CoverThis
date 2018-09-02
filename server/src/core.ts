@@ -49,11 +49,12 @@ if (app.get("env") === "production") {
 
 import { Index } from "elasticlunr";
 export const elastSearch = new Index();
-elastSearch.addField("TITLE");      // Title of book
-elastSearch.addField("AURTHOR");    // Author
-elastSearch.addField("CATEGORY");   // Category
-elastSearch.setRef("AMAZON ID");    // ID
-import { books } from "./data/bookListing";
+elastSearch.addField("Title");      // Title of book
+elastSearch.addField("Summary");    // Summary
+elastSearch.addField("Aurthor");    // Author
+elastSearch.addField("Category");   // Category
+elastSearch.setRef("ID");           // ID
+import { books } from "./data/second_dump";
 books.forEach((val: any) => {
     elastSearch.addDoc(val);
 });
