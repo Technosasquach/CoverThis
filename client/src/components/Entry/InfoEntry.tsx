@@ -267,7 +267,7 @@ export class InfoEntry extends React.Component<{
                         <a href="#" onClick={(e)=>{e.preventDefault(); this.searchBooks();}}>Begin</a>
                     </div>
                     {this.state.searched ? (<div className="InfoSearchedBooks">
-                        <h3>Books</h3>
+                        {/* <h3>Books</h3> */}
                         {this.state.books.map((val: any[]) => {
                             // val.map((val2: any) => {
                                 // console.log("Rendering Book Listings");

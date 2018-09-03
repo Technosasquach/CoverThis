@@ -66,17 +66,33 @@ export default class Render extends React.Component<{frontEnd: FrontEndControlle
 
         this.cube = new THREE.Mesh(
             new THREE.BoxGeometry(1, 1, 1), 
-            new THREE.MeshBasicMaterial({ color: 0xffffff }));
-        this.cube.translateX(5);
-        this.cube.translateY(3);
-        this.cube.translateZ(2);
+            new THREE.MeshBasicMaterial({ color: catagoryToColour(this.props.frontEnd.book.Category) }));
+        this.cube.translateX(this.props.frontEnd.book.d1 * scale);
+        this.cube.translateY(this.props.frontEnd.book.d2 * scale);
+        this.cube.translateZ(this.props.frontEnd.book.d3 * scale);
         this.scene.add(this.cube);
 
-        const axisSpace = 10;
+        this.cube = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 1, 1), 
+            new THREE.MeshBasicMaterial({ color: 0xffffff }));
+        this.cube.translateX(this.props.frontEnd.result.d1 * scale);
+        this.cube.translateY(this.props.frontEnd.result.d2 * scale);
+        this.cube.translateZ(this.props.frontEnd.result.d3 * scale);
+        this.scene.add(this.cube);
         const lineMaterial = new THREE.LineBasicMaterial({
             color: 0xffffff
         });
-        
+        let geometryCubes = new THREE.Geometry();
+        geometryCubes.vertices.push(
+            new THREE.Vector3( this.props.frontEnd.book.d1 * scale, this.props.frontEnd.book.d2 * scale, this.props.frontEnd.book.d3 * scale ),
+            new THREE.Vector3( this.props.frontEnd.result.d1 * scale, this.props.frontEnd.result.d2 * scale, this.props.frontEnd.result.d3 * scale ),
+        );
+        this.scene.add( new THREE.Line( geometryCubes, lineMaterial ) );
+
+
+
+
+        const axisSpace = 10;    
         let geometryD1 = new THREE.Geometry();
         geometryD1.vertices.push(
             new THREE.Vector3( dimensions.minD1 * scale  - axisSpace, dimensions.minD2 * scale  - axisSpace, dimensions.minD3 * scale  - axisSpace),
